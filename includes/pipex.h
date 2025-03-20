@@ -6,13 +6,14 @@
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:21 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:26:26 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/20 16:31:55 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -39,5 +40,7 @@ void		cleanup(t_pipex *pipex);
 
 void		is_here_doc_active(t_pipex *pipex, int argc, char **argv);
 void		cmd_counter(t_pipex *pipex, int argc);
+
+void		handle_error(const char *message);
 
 #endif

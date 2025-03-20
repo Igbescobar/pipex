@@ -11,6 +11,7 @@ SRCS		:= $(SRC_DIR)/main.c \
 			   $(SRC_DIR)/init_pipex.c \
 			   $(SRC_DIR)/init_pipex_utils.c \
 			   $(SRC_DIR)/check_args.c \
+			   $(SRC_DIR)/errors.c \
 			  # $(SRC_DIR)/parse_cmds.c \
 			  # $(SRC_DIR)/parse_args.c \
 			  # $(SRC_DIR)/exec.c \
