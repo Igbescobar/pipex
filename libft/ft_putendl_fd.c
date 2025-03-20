@@ -1,30 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/04/03 16:33:03 by igngonza          #+#    #+#             */
+/*   Updated: 2024/04/03 17:02:21 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+void	ft_putendl_fd(char *s, int fd)
 {
-	int min_args;
-	(void)argv;
-
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
-	{
-		perror("Error: Too few arguments.");
-		exit(1);
-	}
+	write(fd, s, ft_strlen(s));
+	write(fd, "\n", 1);
 }

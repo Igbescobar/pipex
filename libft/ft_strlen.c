@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/03/12 17:40:29 by igngonza          #+#    #+#             */
+/*   Updated: 2024/04/15 17:34:59 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+size_t	ft_strlen(const char *s)
 {
-	int min_args;
-	(void)argv;
+	size_t	i;
 
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
-	{
-		perror("Error: Too few arguments.");
-		exit(1);
-	}
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }
+/*int	main(void)
+{
+	printf("%zu\n", ft_strlen("i like pineapple"));
+	return (0);
+}*/

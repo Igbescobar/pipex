@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/04/03 15:30:12 by igngonza          #+#    #+#             */
+/*   Updated: 2024/04/03 18:24:54 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	int min_args;
-	(void)argv;
+	char			*result;
+	unsigned int	i;
 
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
+	i = 0;
+	if (!s)
+		return (0);
+	result = malloc(sizeof(char) * (ft_strlen(s) + 1));
+	if (!result)
+		return (0);
+	while (s[i])
 	{
-		perror("Error: Too few arguments.");
-		exit(1);
+		result[i] = f(i, s[i]);
+		i++;
 	}
+	result[i] = '\0';
+	return (result);
 }

@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/03/20 11:27:00 by igngonza          #+#    #+#             */
+/*   Updated: 2024/03/20 13:00:53 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+void	*ft_calloc(size_t count, size_t size)
 {
-	int min_args;
-	(void)argv;
+	void	*result;
 
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
-	{
-		perror("Error: Too few arguments.");
-		exit(1);
-	}
+	result = (void *)malloc(count * size);
+	if (result != NULL)
+		ft_memset(result, 0, count * size);
+	return (result);
 }
+
+/*int	main(void)
+{
+	void *pointer = calloc(10, 4);
+	// void *pointer2 = ft_calloc(10, 4);
+	printf("%p\n", pointer);
+	return (0);
+}*/

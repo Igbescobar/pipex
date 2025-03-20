@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/03/12 12:43:47 by igngonza          #+#    #+#             */
+/*   Updated: 2024/04/15 16:57:32 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+int	ft_tolower(int c)
 {
-	int min_args;
-	(void)argv;
-
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
+	if (c >= 65 && c <= 90)
 	{
-		perror("Error: Too few arguments.");
-		exit(1);
+		c = c + 32;
 	}
+	return (c);
 }
+/*int	main(void)
+{
+	printf("%d\n", ft_tolower('h'));
+	return (0);
+}*/

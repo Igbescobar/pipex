@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/03/25 11:47:31 by igngonza          #+#    #+#             */
+/*   Updated: 2024/04/03 18:25:01 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+char	*ft_strtrim(char const *s1, char const *set)
 {
-	int min_args;
-	(void)argv;
+	size_t	len;
+	char	*result;
 
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
-	{
-		perror("Error: Too few arguments.");
-		exit(1);
-	}
+	if (s1 == NULL || set == NULL)
+		return (NULL);
+	while (ft_strchr(set, *s1) && *s1)
+		s1++;
+	len = ft_strlen(s1);
+	while (len && ft_strchr(set, s1[len]))
+		len--;
+	result = ft_substr(s1, 0, len + 1);
+	return (result);
 }

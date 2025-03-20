@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/03/12 12:51:44 by igngonza          #+#    #+#             */
+/*   Updated: 2024/04/15 16:59:46 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+int	ft_isalnum(int c)
 {
-	int min_args;
-	(void)argv;
-
-	if (pipex->here_doc)
-		min_args = 6;
+	if ((c >= '0' && c <= '9') || (c >= 65 && c <= 90) || (c >= 97 && c <= 122))
+		return (1);
 	else
-		min_args = 5;
-
-	if (argc < min_args)
-	{
-		perror("Error: Too few arguments.");
-		exit(1);
-	}
+		return (0);
 }
+/*int	main(void)
+{
+	printf("%d\n", ft_isalnum('H'));
+	return (0);
+}*/

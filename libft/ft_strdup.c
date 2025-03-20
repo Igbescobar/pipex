@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/03/20 13:05:34 by igngonza          #+#    #+#             */
+/*   Updated: 2024/03/22 11:22:00 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+char	*ft_strdup(const char *s1)
 {
-	int min_args;
-	(void)argv;
+	size_t	len;
+	void	*result;
 
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
-	{
-		perror("Error: Too few arguments.");
-		exit(1);
-	}
+	len = ft_strlen(s1) + 1;
+	result = (char *)malloc(len);
+	if (result == 0)
+		return (0);
+	ft_memcpy(result, s1, len);
+	return (result);
 }
+
+/*int	main(void)
+{
+	char	*str;
+	char	*tmp;
+
+	tmp = "";
+	str = ft_strdup(tmp);
+	printf("%s\n", str);
+}*/

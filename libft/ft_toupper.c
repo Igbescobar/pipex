@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/03/12 12:25:22 by igngonza          #+#    #+#             */
+/*   Updated: 2024/03/19 16:37:26 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include <ctype.h>
+#include <stdio.h>
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+int	ft_toupper(int c)
 {
-	int min_args;
-	(void)argv;
-
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
+	if (c >= 97 && c <= 122)
 	{
-		perror("Error: Too few arguments.");
-		exit(1);
+		c = c - 32;
 	}
+	return (c);
 }
+
+/*int	main(void)
+{
+	printf("%d\n", ft_toupper(128));
+	printf("%d\n", toupper(128));
+}*/

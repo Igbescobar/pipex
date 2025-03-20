@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args.c                                       :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/19 13:15:45 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:46:10 by igngonza         ###   ########.fr       */
+/*   Created: 2024/04/03 17:03:16 by igngonza          #+#    #+#             */
+/*   Updated: 2024/04/04 16:45:54 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	check_args(t_pipex *pipex, int argc, char **argv)
+void	ft_putnbr_fd(int n, int fd)
 {
-	int min_args;
-	(void)argv;
+	char	c;
+	int		sign;
 
-	if (pipex->here_doc)
-		min_args = 6;
-	else
-		min_args = 5;
-
-	if (argc < min_args)
+	sign = 1;
+	if (n < 0)
 	{
-		perror("Error: Too few arguments.");
-		exit(1);
+		ft_putchar_fd('-', fd);
+		sign *= -1;
 	}
+	if (n / 10)
+		ft_putnbr_fd(n / 10 * sign, fd);
+	c = n % 10 * sign + '0';
+	ft_putchar_fd(c, fd);
 }
