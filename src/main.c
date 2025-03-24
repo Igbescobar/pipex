@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:15:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/24 11:34:29 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/24 16:56:48 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,17 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_pipex pipex;
 
-	(void)envp;
 	init_pipex(&pipex, argc, argv);
 	check_args(&pipex, argc, argv);
 	parse_cmds(&pipex, argv);
 	parse_paths(&pipex, argv, envp);
 
-	print_parsed_args(&pipex);
-	print_cmd_paths(&pipex);
+	// print_parsed_args(&pipex);
+	// print_cmd_paths(&pipex);
 
-	// parse_args(&pipex, argv, envp);
+	exec(&pipex);
 
-	// while (pipex.cmd_count > 0)
-	//	exec(&pipex);
-
-	// cleanup(&pipex);
+	cleanup(&pipex);
 
 	return (0);
 }

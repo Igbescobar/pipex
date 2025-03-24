@@ -14,8 +14,8 @@ SRCS		:= $(SRC_DIR)/main.c \
                $(SRC_DIR)/errors.c \
                $(SRC_DIR)/parse_cmds.c \
                $(SRC_DIR)/parse_paths.c \
-              # $(SRC_DIR)/exec.c \
-              # $(SRC_DIR)/utils.c
+               $(SRC_DIR)/exec.c \
+               $(SRC_DIR)/cleanup.c
 
 OBJS		:= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
