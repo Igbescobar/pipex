@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:21 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 16:31:55 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:33:07 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
+# include "ft_printf.h"
+# include "get_next_line.h"
+# include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
@@ -34,7 +37,8 @@ typedef struct s_pipex
 void		init_pipex(t_pipex *pipex, int argc, char **argv);
 void		check_args(t_pipex *pipex, int argc, char **argv);
 void		parse_cmds(t_pipex *pipex, char **argv);
-void		parse_args(t_pipex *pipex, char **argv, char **envp);
+void		parse_paths(t_pipex *pipex, char **argv, char **envp);
+void		handle_here_doc(t_pipex *pipex, char *delimiter);
 void		exec(t_pipex *pipex);
 void		cleanup(t_pipex *pipex);
 

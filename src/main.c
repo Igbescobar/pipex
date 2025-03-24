@@ -3,14 +3,52 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:15:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 15:45:52 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:34:29 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	print_parsed_args(t_pipex *pipex)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	printf("\n===== Parsed Arguments =====\n");
+	printf("Number of commands: %d\n", pipex->cmd_count);
+	while (i < pipex->cmd_count)
+	{
+		printf("Command %d: ", i);
+		j = 0;
+		while (pipex->cmd_args[i][j])
+		{
+			printf("\"%s\" ", pipex->cmd_args[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+	printf("============================\n\n");
+}
+
+void	print_cmd_paths(t_pipex *pipex)
+{
+	int	i;
+
+	i = 0;
+	printf("\n===== Command Paths =====\n");
+	while (pipex->cmd_paths && pipex->cmd_paths[i])
+	{
+		printf("Path %d: %s\n", i, pipex->cmd_paths[i]);
+		i++;
+	}
+	printf("=========================\n\n");
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -19,12 +57,12 @@ int	main(int argc, char **argv, char **envp)
 	(void)envp;
 	init_pipex(&pipex, argc, argv);
 	check_args(&pipex, argc, argv);
-	printf("Number of commands: %d\n", pipex.cmd_count);
-	printf("Is here_doc being used: %d\n", pipex.here_doc);
-	printf("Input file descriptor: %d\n", pipex.in_fd);
-	printf("Output file descriptor: %d\n", pipex.out_fd);
-	printf("Is input file invalid: %d\n", pipex.is_invalid_infile);
-	// parse_cmds(&pipex, argv);
+	parse_cmds(&pipex, argv);
+	parse_paths(&pipex, argv, envp);
+
+	print_parsed_args(&pipex);
+	print_cmd_paths(&pipex);
+
 	// parse_args(&pipex, argv, envp);
 
 	// while (pipex.cmd_count > 0)

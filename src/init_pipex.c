@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_pipex.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/20 16:31:33 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/24 11:17:08 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	init_pipex(t_pipex *pipex, int argc, char **argv)
 	pipex->cmd_args = NULL;
 	is_here_doc_active(pipex, argc, argv);
 	cmd_counter(pipex, argc);
-	if (!pipex->here_doc)
-		open_input_file(pipex, argv[1]);
+	if (pipex->here_doc)
+		handle_here_doc(pipex, argv[2]);
 	else
-		pipex->in_fd = STDIN_FILENO;
+		open_input_file(pipex, argv[1]);
 	open_output_file(pipex, argv[argc - 1], pipex->here_doc);
 }
