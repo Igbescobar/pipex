@@ -6,49 +6,52 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/24 11:17:08 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/27 10:34:58 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	open_input_file(t_pipex *pipex, char *filename)
+int open_file(char *argv, int i)
 {
-	pipex->in_fd = open(filename, O_RDONLY);
-	if (pipex->in_fd == -1)
-	{
-		handle_error("Error opening input file");
-		pipex->is_invalid_infile = 1;
-	}
+  int file;
+
+  file = 0;
+  if (i == 0)
+    file = open(argv, O_WRONLY | O_CREAT | O_APPEND, 0777);
+  else if (i == 1)
+    file = open(argv, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+  else if (i == 2)
+    file = open(argv, O_RDONLY, 0777);
+  if (file == -1)
+    error();
+  return (file);
 }
 
-static void	open_output_file(t_pipex *pipex, char *filename, int here_doc)
+void usage(void)
 {
-	int	flags;
-
-	flags = O_WRONLY | O_CREAT;
-	if (here_doc)
-		flags |= O_APPEND;
-	else
-		flags |= O_TRUNC;
-	pipex->out_fd = open(filename, flags, 0777);
-	if (pipex->out_fd == -1)
-	{
-		handle_error("Error opening output file");
-		exit(1);
-	}
+  ft_putstr_fd("\033[31mError: Bad argument\n\e[0m", 2);
+  ft_putstr_fd("Ex: ./pipex <file1> <cmd1> <cmd2> <...> <file2>\n", 1);
+  ft_putstr_fd("    ./pipex \"here_doc\" <LIMITER> <cmd> <cmd1> <...> <file>\n", 1);
+  exit(EXIT_SUCCESS);
 }
 
-void	init_pipex(t_pipex *pipex, int argc, char **argv)
+void init_pipex(t_pipex *pipex, int argc, char **argv)
 {
-	pipex->is_invalid_infile = 0;
-	pipex->cmd_paths = NULL;
-	pipex->cmd_args = NULL;
-	is_here_doc_active(pipex, argc, argv);
-	cmd_counter(pipex, argc);
-	if (pipex->here_doc)
-		handle_here_doc(pipex, argv[2]);
-	else
-		open_input_file(pipex, argv[1]);
-	open_output_file(pipex, argv[argc - 1], pipex->here_doc);
+  pipex->is_invalid_infile = 0;
+  pipex->cmd_paths = NULL;
+  pipex->cmd_args = NULL;
+  is_here_doc_active(pipex, argc, argv);
+  cmd_counter(pipex, argc);
+  if (pipex->here_doc)
+  {
+    pipex->out_fd = open_file(argv[argc - 1], 0);
+    handle_here_doc(argv[2], argc);
+  }
+  else
+  {
+    pipex->out_fd = open_file(argv[argc - 1], 1);
+    pipex->in_fd = open_file(argv[1], 2);
+    dup2(pipex->in_fd, STDIN_FILENO);
+  }
 }

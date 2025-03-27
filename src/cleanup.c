@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:10:02 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/24 16:10:29 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/26 13:23:14 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	cleanup(t_pipex *pipex)
+void cleanup(t_pipex *pipex)
 {
 	int i;
 
