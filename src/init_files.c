@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/27 18:50:35 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:30:12 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void get_infile(char **argv, t_pipex *pipex)
   {
     pipex->in_fd = open(argv[1], O_RDONLY);
     if (pipex->in_fd < 0)
-      handle_error(ERR_INFILE);
+    {
+      perror(argv[1]);
+      pipex->in_fd = STDIN_FILENO;
+    }
   }
 }
 

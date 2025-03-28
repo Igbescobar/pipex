@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:15:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/27 18:38:17 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/28 15:21:06 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 int main(int argc, char **argv, char **envp)
 {
   t_pipex pipex;
+  int status;
+  int last_exit_status;
+  int pid;
 
+  last_exit_status = 0;
   if (argc < here_doc_checker(argv[1], &pipex))
     return (handle_msg(ERR_INPUT));
   init_files(argv, argc, &pipex);
@@ -26,7 +30,11 @@ int main(int argc, char **argv, char **envp)
   while (++(pipex.idx) < pipex.cmd_count)
     create_child_process(pipex, envp);
   close_pipes(&pipex);
-  waitpid(-1, NULL, 0);
+  while ((pid = waitpid(-1, &status, 0)) > 0)
+  {
+    if ((status & 0x7F) == 0)
+      last_exit_status = (status >> 8) & 0xFF;
+  }
   parent_free(&pipex);
-  return (0);
+  return (last_exit_status);
 }
