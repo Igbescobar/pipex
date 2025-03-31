@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/28 15:30:12 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/03/29 12:11:45 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void get_infile(char **argv, t_pipex *pipex)
     pipex->in_fd = open(argv[1], O_RDONLY);
     if (pipex->in_fd < 0)
     {
-      perror(argv[1]);
+      perror(ERR_INFILE);
       pipex->in_fd = STDIN_FILENO;
     }
   }
@@ -34,7 +34,10 @@ void get_outfile(char *argv, t_pipex *pipex)
   else
     pipex->out_fd = open(argv, O_CREAT | O_RDWR | O_TRUNC, 0000644);
   if (pipex->out_fd < 0)
-    handle_error(ERR_OUTFILE);
+  {
+    perror(ERR_OUTFILE);
+    pipex->out_fd = -1;
+  }
 }
 
 void init_files(char **argv, int argc, t_pipex *pipex)
