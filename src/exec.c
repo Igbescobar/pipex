@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:48:20 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/02 21:32:35 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/03 01:16:49 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	handle_child_error(t_pipex *pipex, int saved_stdout)
 		dup2(saved_stdout, STDOUT_FILENO);
 		close(saved_stdout);
 		ft_printf("%s: command not found\n", pipex->cmd_args[pipex->idx][0]);
+		parent_free(pipex);
 		exit(127);
 	}
 }

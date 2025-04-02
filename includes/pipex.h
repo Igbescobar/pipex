@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:21 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/02 21:33:48 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/03 01:16:27 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ void		free_cmd_args(t_pipex *pipex);
 void		parent_free(t_pipex *pipex);
 
 void		handle_error(const char *message);
+int			handle_msg(char *err);
 
 #endif
