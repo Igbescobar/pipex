@@ -3,26 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: igngonza <igngonza@student.42.fr>          +#+  +:+       +#+        */
+/*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:48:20 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/31 17:18:30 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:32:35 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-static void	sub_dup2(int zero, int first)
+/* 1. Basic I/O redirection */
+void	redirect_io(int input_fd, int output_fd)
 {
-	dup2(zero, 0);
-	dup2(first, 1);
+	dup2(input_fd, STDIN_FILENO);
+	dup2(output_fd, STDOUT_FILENO);
 }
 
-void	create_child_process(t_pipex *pipex, char **envp)
+/* 2. Set up child process I/O based on position */
+void	setup_child_io(t_pipex *pipex)
+{
+	if (pipex->idx == 0)
+	{
+		redirect_io(pipex->in_fd, pipex->pipes[1]);
+	}
+	else if (pipex->idx == pipex->cmd_count - 1)
+	{
+		if (pipex->out_fd != -1)
+		{
+			redirect_io(pipex->pipes[2 * pipex->idx - 2], pipex->out_fd);
+		}
+		else
+		{
+			close(pipex->pipes[2 * pipex->idx - 2]);
+			exit(1);
+		}
+	}
+	else
+	{
+		redirect_io(pipex->pipes[2 * pipex->idx - 2], pipex->pipes[2
+			* pipex->idx + 1]);
+	}
+}
+
+/* 3. Handle child process errors */
+void	handle_child_error(t_pipex *pipex, int saved_stdout)
+{
+	if (!pipex->cmd_paths[pipex->idx])
+	{
+		dup2(saved_stdout, STDOUT_FILENO);
+		close(saved_stdout);
+		ft_printf("%s: command not found\n", pipex->cmd_args[pipex->idx][0]);
+		exit(127);
+	}
+}
+
+/* 4. Execute child command */
+void	execute_child_command(t_pipex *pipex, char **envp)
 {
 	char	*cmd;
 	char	**cmd_args;
-	int		saved_stdout;
+
+	cmd = pipex->cmd_paths[pipex->idx];
+	cmd_args = pipex->cmd_args[pipex->idx];
+	execve(cmd, cmd_args, envp);
+}
+
+/* 5. Main child process creation */
+void	create_child_process(t_pipex *pipex, char **envp)
+{
+	int	saved_stdout;
 
 	pipex->pid = fork();
 	if (pipex->pid == -1)
@@ -30,32 +79,9 @@ void	create_child_process(t_pipex *pipex, char **envp)
 	if (pipex->pid == 0)
 	{
 		saved_stdout = dup(STDOUT_FILENO);
-		if (pipex->idx == 0)
-			sub_dup2(pipex->in_fd, pipex->pipes[1]);
-		else if (pipex->idx == pipex->cmd_count - 1)
-		{
-			if (pipex->out_fd != -1)
-				sub_dup2(pipex->pipes[2 * pipex->idx - 2], pipex->out_fd);
-			else
-			{
-				close(pipex->pipes[2 * pipex->idx - 2]);
-				exit(1);
-			}
-		}
-		else
-			sub_dup2(pipex->pipes[2 * pipex->idx - 2], pipex->pipes[2
-				* pipex->idx + 1]);
+		setup_child_io(pipex);
 		close_pipes(pipex);
-		cmd = pipex->cmd_paths[pipex->idx];
-		cmd_args = pipex->cmd_args[pipex->idx];
-		if (!cmd)
-		{
-			dup2(saved_stdout, STDOUT_FILENO);
-			close(saved_stdout);
-			ft_printf("%s: command not found\n",
-				pipex->cmd_args[pipex->idx][0]);
-			exit(127);
-		}
-		execve(cmd, cmd_args, envp);
+		handle_child_error(pipex, saved_stdout);
+		execute_child_command(pipex, envp);
 	}
 }

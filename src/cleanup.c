@@ -6,65 +6,81 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 16:10:02 by igngonza          #+#    #+#             */
-/*   Updated: 2025/03/27 19:04:32 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/02 21:09:10 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void parent_free(t_pipex *pipex)
+void	safe_close(int *fd)
 {
-  int i;
-  int j;
-
-  i = 0;
-  close(pipex->in_fd);
-  close(pipex->out_fd);
-  if (pipex->here_doc)
-    unlink(".heredoc_tmp");
-  while (pipex->cmd_paths[i])
-  {
-    free(pipex->cmd_paths[i]);
-    i++;
-  }
-  free(pipex->cmd_paths);
-  i = 0;
-  while (pipex->cmd_args[i])
-  {
-    j = 0;
-    while (pipex->cmd_args[i][j])
-    {
-      free(pipex->cmd_args[i][j]);
-      j++;
-    }
-    free(pipex->cmd_args[i]);
-    i++;
-  }
-  free(pipex->cmd_args);
-  free(pipex->pipes);
+	if (*fd >= 0)
+	{
+		close(*fd);
+		*fd = -1;
+	}
 }
 
-void child_free(t_pipex *pipex)
+void	cleanup_heredoc(t_pipex *pipex)
 {
-  int i;
-
-  i = 0;
-  while (pipex->cmd_args[i])
-  {
-    free(pipex->cmd_args[i]);
-    i++;
-  }
-  free(pipex->cmd_args);
-  free(pipex->cmd_paths);
+	if (pipex->here_doc)
+		unlink(".heredoc_tmp");
 }
 
-void pipe_free(t_pipex *pipex)
+void	free_cmd_paths(t_pipex *pipex)
 {
-  close(pipex->in_fd);
-  close(pipex->out_fd);
-  if (pipex->here_doc)
-    unlink(".heredoc_tmp");
-  free(pipex->pipes);
-  handle_msg(ERR_ENVP);
-  exit(1);
+	int	i;
+
+	if (!pipex->cmd_paths)
+		return ;
+	i = 0;
+	while (i < pipex->cmd_count)
+	{
+		free(pipex->cmd_paths[i]);
+		pipex->cmd_paths[i] = NULL;
+		i++;
+	}
+	free(pipex->cmd_paths);
+	pipex->cmd_paths = NULL;
+}
+
+void	free_cmd_args(t_pipex *pipex)
+{
+	int	i;
+	int	j;
+
+	if (!pipex->cmd_args)
+		return ;
+	i = 0;
+	while (i < pipex->cmd_count && pipex->cmd_args[i])
+	{
+		j = 0;
+		while (pipex->cmd_args[i][j])
+		{
+			free(pipex->cmd_args[i][j]);
+			pipex->cmd_args[i][j] = NULL;
+			j++;
+		}
+		free(pipex->cmd_args[i]);
+		pipex->cmd_args[i] = NULL;
+		i++;
+	}
+	free(pipex->cmd_args);
+	pipex->cmd_args = NULL;
+}
+
+void	parent_free(t_pipex *pipex)
+{
+	if (!pipex)
+		return ;
+	safe_close(&pipex->in_fd);
+	safe_close(&pipex->out_fd);
+	cleanup_heredoc(pipex);
+	free_cmd_paths(pipex);
+	free_cmd_args(pipex);
+	if (pipex->pipes)
+	{
+		free(pipex->pipes);
+		pipex->pipes = NULL;
+	}
 }
