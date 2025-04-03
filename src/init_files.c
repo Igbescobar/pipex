@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/02 21:14:39 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/03 12:31:31 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_infile(char **argv, t_pipex *pipex)
 		if (pipex->in_fd < 0)
 		{
 			perror(ERR_INFILE);
-			pipex->in_fd = STDIN_FILENO;
+			pipex->in_fd = -1;
 		}
 	}
 }
