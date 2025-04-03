@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:48:20 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/03 10:52:56 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/03 11:54:59 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	setup_child_io(t_pipex *pipex)
 		}
 		else
 		{
-			close(pipex->pipes[2 * pipex->idx - 2]);
+			parent_free(pipex);
 			exit(1);
 		}
 	}
