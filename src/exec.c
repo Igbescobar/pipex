@@ -6,20 +6,18 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/24 15:48:20 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/03 01:16:49 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/03 10:52:56 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-/* 1. Basic I/O redirection */
 void	redirect_io(int input_fd, int output_fd)
 {
 	dup2(input_fd, STDIN_FILENO);
 	dup2(output_fd, STDOUT_FILENO);
 }
 
-/* 2. Set up child process I/O based on position */
 void	setup_child_io(t_pipex *pipex)
 {
 	if (pipex->idx == 0)
@@ -45,7 +43,6 @@ void	setup_child_io(t_pipex *pipex)
 	}
 }
 
-/* 3. Handle child process errors */
 void	handle_child_error(t_pipex *pipex, int saved_stdout)
 {
 	if (!pipex->cmd_paths[pipex->idx])
@@ -58,7 +55,6 @@ void	handle_child_error(t_pipex *pipex, int saved_stdout)
 	}
 }
 
-/* 4. Execute child command */
 void	execute_child_command(t_pipex *pipex, char **envp)
 {
 	char	*cmd;
@@ -69,7 +65,6 @@ void	execute_child_command(t_pipex *pipex, char **envp)
 	execve(cmd, cmd_args, envp);
 }
 
-/* 5. Main child process creation */
 void	create_child_process(t_pipex *pipex, char **envp)
 {
 	int	saved_stdout;
