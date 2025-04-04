@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/21 10:42:53 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/03 10:58:34 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:33:26 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,13 +81,12 @@ void	resolve_command_paths(t_pipex *pipex, char **paths)
 	pipex->cmd_paths[i] = NULL;
 }
 
-void	parse_paths(t_pipex *pipex, char **argv, char **envp)
+void	parse_paths(t_pipex *pipex, char **envp)
 {
 	char	*path_env;
 	char	**paths;
 	int		i;
 
-	(void)argv;
 	path_env = get_env_path(envp);
 	if (!path_env)
 		handle_error("Error: PATH not found");

@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:16:21 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/03 01:16:27 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:33:40 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void		finalize_heredoc(t_pipex *pipex);
 void		handle_heredoc(char *limiter, t_pipex *pipex);
 
 void		parse_cmds(t_pipex *pipex, char **argv);
-void		parse_paths(t_pipex *pipex, char **argv, char **envp);
+void		parse_paths(t_pipex *pipex, char **envp);
 void		create_child_process(t_pipex *pipex, char **envp);
 
 void		safe_close(int *fd);

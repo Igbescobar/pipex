@@ -6,7 +6,7 @@
 /*   By: igngonza <igngonza@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/19 13:15:03 by igngonza          #+#    #+#             */
-/*   Updated: 2025/04/02 21:35:12 by igngonza         ###   ########.fr       */
+/*   Updated: 2025/04/04 13:33:32 by igngonza         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int argc, char **argv, char **envp)
 		return (handle_msg(ERR_INPUT));
 	init_files(argv, argc, &pipex);
 	parse_cmds(&pipex, argv);
-	parse_paths(&pipex, argv, envp);
+	parse_paths(&pipex, envp);
 	create_pipes(&pipex);
 	pipex.idx = -1;
 	while (++(pipex.idx) < pipex.cmd_count)
